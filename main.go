@@ -7,17 +7,6 @@ import (
     DOM "github.com/craigfay/golang_reactive_dom/dom"
 )
 
-var signal = make(chan int)
-
-func keepAlive() {
-    for {
-        m := <- signal
-        if m == 0 {
-            println("quit signal received")
-            break
-        }
-    }
-}
 
 func main() {
     count := 0
@@ -36,6 +25,5 @@ func main() {
 
     DOM.Event(div, "click", onClick)
     DOM.Append(root, div)
-
-    keepAlive()
+    DOM.KeepAlive()
 }

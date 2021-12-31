@@ -5,6 +5,17 @@ import(
     browser "syscall/js"
 )
 
+var signal = make(chan int)
+
+func KeepAlive() {
+    for {
+        m := <- signal
+        if m == 0 {
+            break
+        }
+    }
+}
+
 type EventHandler = func(this browser.Value, args []browser.Value) interface {}
 
 func Element(tag string) browser.Value {
