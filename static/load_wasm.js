@@ -2,6 +2,8 @@
 // Loading and executing webassembly modules
 
 const go = new Go();
+let mod, inst;
+
 
 WebAssembly.instantiateStreaming(
   fetch("dist/main.wasm", { cache: 'no-cache' }),

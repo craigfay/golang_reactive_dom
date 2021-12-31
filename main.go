@@ -4,7 +4,6 @@ package main
 import (
 	"fmt"
 	"syscall/js"
-
 	. "github.com/siongui/godom/wasm"
 )
 
@@ -12,12 +11,13 @@ var signal = make(chan int)
 
 func keepAlive() {
 	for {
-		<-signal
+		m := <-signal
+		if m == 0 {
+			println("quit signal received")
+			break
+		}
 	}
 }
-
-type Empty struct {}
-
 
 func main() {
 	count := 0
@@ -28,7 +28,7 @@ func main() {
 	onClick := js.FuncOf(func(this js.Value, args []js.Value) interface {} {
 		count++
 		div.Set("textContent", fmt.Sprintf("I am clicked %d time", count))
-        return Empty {}
+        return js.Value {}
 	})
 
 	div.Call("addEventListener", "click", onClick)
