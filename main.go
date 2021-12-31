@@ -27,6 +27,11 @@ func setAttr(el js.Value, key string, val string) {
     el.Set(key, val)
 }
 
+type EventHandler = func(this js.Value, args []js.Value) interface {}
+func event(el js.Value, eventName string, fn EventHandler) {
+    el.Call("addEventListener", eventName, js.FuncOf(fn))
+}
+
 func main() {
     count := 0
 
@@ -34,13 +39,13 @@ func main() {
     div := element("div")
     setAttr(div, "textContent", fmt.Sprintf("I am clicked %d time", count))
 
-    onClick := js.FuncOf(func(this js.Value, args []js.Value) interface {} {
+    onClick := func(this js.Value, args []js.Value) interface {} {
         count++
         div.Set("textContent", fmt.Sprintf("I am clicked %d time", count))
         return js.Value {}
-    })
+    }
 
-    div.Call("addEventListener", "click", onClick)
+    event(div, "click", onClick)
 
     root := Document.GetElementById("root")
     root.Call("appendChild", div)
