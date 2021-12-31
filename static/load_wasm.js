@@ -4,7 +4,7 @@
 const go = new Go();
 
 WebAssembly.instantiateStreaming(
-  fetch("dist/alert.wasm", { cache: 'no-cache' }),
+  fetch("dist/main.wasm", { cache: 'no-cache' }),
   go.importObject,
 )
   .then(async (result) => {
