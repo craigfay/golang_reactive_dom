@@ -3,8 +3,8 @@ package main
 
 import (
     "fmt"
-    "syscall/js"
-    . "github.com/craigfay/golang_reactive_dom/dom"
+    browser "syscall/js"
+    DOM "github.com/craigfay/golang_reactive_dom/dom"
 )
 
 var signal = make(chan int)
@@ -21,21 +21,21 @@ func keepAlive() {
 
 func main() {
     count := 0
-    root := Query("#root")
-    div := Element("div")
+    root := DOM.Query("#root")
+    div := DOM.Element("div")
 
     text := fmt.Sprintf("I am clicked %d time", count)
-    SetAttr(div, "textContent", text)
+    DOM.SetAttr(div, "textContent", text)
 
-    onClick := func(this js.Value, args []js.Value) interface {} {
+    onClick := func(this browser.Value, args []browser.Value) interface {} {
         count++
         text := fmt.Sprintf("I am clicked %d time", count)
-        SetAttr(div, "textContent", text)
-        return js.Value {}
+        DOM.SetAttr(div, "textContent", text)
+        return browser.Value {}
     }
 
-    Event(div, "click", onClick)
-    Append(root, div)
+    DOM.Event(div, "click", onClick)
+    DOM.Append(root, div)
 
     keepAlive()
 }

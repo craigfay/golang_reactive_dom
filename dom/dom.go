@@ -2,32 +2,31 @@
 package lib
 
 import(
-    "syscall/js"
+    browser "syscall/js"
 )
 
-func Element(tag string) js.Value {
-    return js.Global().Get("document").Call("createElement", tag)
+type EventHandler = func(this browser.Value, args []browser.Value) interface {}
+
+func Element(tag string) browser.Value {
+    return browser.Global().Get("document").Call("createElement", tag)
 }
 
-func SetAttr(el js.Value, key string, val string) {
+func SetAttr(el browser.Value, key string, val string) {
     el.Set(key, val)
 }
 
-type EventHandler = func(this js.Value, args []js.Value) interface {}
-
-
-func Event(el js.Value, eventName string, fn EventHandler) {
-    el.Call("addEventListener", eventName, js.FuncOf(fn))
+func Event(el browser.Value, eventName string, fn EventHandler) {
+    el.Call("addEventListener", eventName, browser.FuncOf(fn))
 }
 
-func Query(selector string) js.Value {
-    return js.Global().Get("document").Call("querySelector", selector)
+func Query(selector string) browser.Value {
+    return browser.Global().Get("document").Call("querySelector", selector)
 }
 
-func QueryAll(selector string) js.Value {
-    return js.Global().Get("document").Call("querySelectorAll", selector)
+func QueryAll(selector string) browser.Value {
+    return browser.Global().Get("document").Call("querySelectorAll", selector)
 }
 
-func Append(parent js.Value, child js.Value) {
+func Append(parent browser.Value, child browser.Value) {
     parent.Call("appendChild", child)
 }
