@@ -1,1 +1,6 @@
+
+# Build Artifacts
 dist/*.wasm
+
+# MacOS Folder Metadata
+.DS_Store
