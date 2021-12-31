@@ -11,7 +11,7 @@ var signal = make(chan int)
 
 func keepAlive() {
 	for {
-		m := <-signal
+		m := <- signal
 		if m == 0 {
 			println("quit signal received")
 			break
