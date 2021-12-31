@@ -41,7 +41,7 @@ func main() {
 
     onClick := func(this js.Value, args []js.Value) interface {} {
         count++
-        div.Set("textContent", fmt.Sprintf("I am clicked %d time", count))
+        setAttr(div, "textContent", fmt.Sprintf("I am clicked %d time", count))
         return js.Value {}
     }
 
