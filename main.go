@@ -2,39 +2,48 @@
 package main
 
 import (
-	"fmt"
-	"syscall/js"
-	. "github.com/siongui/godom/wasm"
+    "fmt"
+    "syscall/js"
+    . "github.com/siongui/godom/wasm"
 )
 
 var signal = make(chan int)
 
 func keepAlive() {
-	for {
-		m := <- signal
-		if m == 0 {
-			println("quit signal received")
-			break
-		}
-	}
+    for {
+        m := <- signal
+        if m == 0 {
+            println("quit signal received")
+            break
+        }
+    }
+}
+
+func element(tag string) js.Value {
+    return js.Global().Get("document").Call("createElement", tag)
+}
+
+func setAttr(el js.Value, key string, val string) {
+    el.Set(key, val)
 }
 
 func main() {
-	count := 0
+    count := 0
 
-	div := Document.CreateElement("div")
-	div.Set("textContent", fmt.Sprintf("I am clicked %d time", count))
+    // div := Document.CreateElement("div")
+    div := element("div")
+    setAttr(div, "textContent", fmt.Sprintf("I am clicked %d time", count))
 
-	onClick := js.FuncOf(func(this js.Value, args []js.Value) interface {} {
-		count++
-		div.Set("textContent", fmt.Sprintf("I am clicked %d time", count))
+    onClick := js.FuncOf(func(this js.Value, args []js.Value) interface {} {
+        count++
+        div.Set("textContent", fmt.Sprintf("I am clicked %d time", count))
         return js.Value {}
-	})
+    })
 
-	div.Call("addEventListener", "click", onClick)
+    div.Call("addEventListener", "click", onClick)
 
     root := Document.GetElementById("root")
     root.Call("appendChild", div)
 
-	keepAlive()
+    keepAlive()
 }
