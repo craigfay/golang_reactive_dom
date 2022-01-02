@@ -4,6 +4,7 @@ import (
     "fmt"
     "log"
     "strings"
+    "bytes"
     "golang.org/x/net/html"
 )
 
@@ -16,7 +17,11 @@ func main() {
                 <a href="/20th-century.html">20th century</a>.
             </p>
         </div>
-        <p>Hello!</p>
+
+        <loop over="name in names">
+            <p>Hello ${name}!</p>
+        </loop>
+
         <div class="container">
             <h1>Title Here</h1>
             <p class="bold">
@@ -55,4 +60,8 @@ func main() {
         }
     }
     f(doc)
+
+    buf := new(bytes.Buffer)
+    html.Render(buf, doc)
+    fmt.Printf("%v\n", buf.String())
 }
