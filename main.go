@@ -1,6 +1,7 @@
 
 package main
 
+
 import (
     "fmt"
     browser "syscall/js"
