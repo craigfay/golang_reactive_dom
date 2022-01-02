@@ -47,6 +47,7 @@ func main() {
             for _, a := range n.Attr {
                 fmt.Printf("  %v = %v \n", a.Key, a.Val)
             }
+
         }
 
 
@@ -59,6 +60,16 @@ func main() {
             f(c)
         }
     }
+
+    hydrate := func(n *html.Node) html.Node {
+        return html.Node {
+            Type: html.ElementNode,
+            Data: "div",
+        }
+    }
+
+    hydrate(doc)
+
     f(doc)
 
     buf := new(bytes.Buffer)
