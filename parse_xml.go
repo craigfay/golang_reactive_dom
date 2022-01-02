@@ -35,23 +35,7 @@ import (
 // `)
 
 var xmldata = []byte(`
-    <html>
-        <div class="container">
-            <h1>Title Here</h1>
-            <p class="bold">
-                One of the great seminal American novels of the
-                <a href="/20th-century.html">20th century</a>.
-            </p>
-        </div>
-        <p>Hello!</p>
-        <div class="container">
-            <h1>Title Here</h1>
-            <p class="bold">
-                One of the great seminal American novels of the
-                <a href="/20th-century.html">20th century</a>.
-            </p>
-        </div>
-    </html>
+
 `)
 
 func main() {

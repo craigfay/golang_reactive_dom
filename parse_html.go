@@ -1,68 +1,58 @@
 package main
 
 import (
-    "encoding/xml"
     "fmt"
-    "io/ioutil"
-    "os"
+    "log"
+    "strings"
+    "golang.org/x/net/html"
 )
 
-// our struct which contains the complete
-// array of all Users in the file
-type Users struct {
-    XMLName xml.Name `xml:"users"`
-    Users   []User   `xml:"user"`
-}
-
-// the user struct, this contains our
-// Type attribute, our user's name and
-// a social struct which will contain all
-// our social links
-type User struct {
-    XMLName xml.Name `xml:"user"`
-    Type    string   `xml:"type,attr"`
-    Name    string   `xml:"name"`
-    Social  Social   `xml:"social"`
-}
-
-// a simple struct which contains all our
-// social links
-type Social struct {
-    XMLName  xml.Name `xml:"social"`
-    Facebook string   `xml:"facebook"`
-    Twitter  string   `xml:"twitter"`
-    Youtube  string   `xml:"youtube"`
-}
-
 func main() {
+    s := `<html>
+        <div class="container">
+            <h1>Title Here</h1>
+            <p class="bold">
+                One of the great seminal American novels of the
+                <a href="/20th-century.html">20th century</a>.
+            </p>
+        </div>
+        <p>Hello!</p>
+        <div class="container">
+            <h1>Title Here</h1>
+            <p class="bold">
+                One of the great seminal American novels of the
+                <a href="/20th-century.html">20th century</a>.
+            </p>
+        </div>
+    </html>
+    `
 
-    // Open our xmlFile
-    xmlFile, err := os.Open("users.xml")
-    // if we os.Open returns an error then handle it
+    doc, err := html.Parse(strings.NewReader(s))
     if err != nil {
-        fmt.Println(err)
+        log.Fatal(err)
     }
 
-    fmt.Println("Successfully Opened users.xml")
-    // defer the closing of our xmlFile so that we can parse it later on
-    defer xmlFile.Close()
+    var f func(*html.Node)
 
-    // read our opened xmlFile as a byte array.
-    byteValue, _ := ioutil.ReadAll(xmlFile)
+    f = func(n *html.Node) {
 
-    // we initialize our Users array
-    var users Users
-    // we unmarshal our byteArray which contains our
-    // xmlFiles content into 'users' which we defined above
-    xml.Unmarshal(byteValue, &users)
+        if n.Type == html.ElementNode {
+            fmt.Printf("node %v \n", n.Data);
 
-    // we iterate through every user within our users array and
-    // print out the user Type, their name, and their facebook url
-    // as just an example
-    for i := 0; i < len(users.Users); i++ {
-        fmt.Println("User Type: " + users.Users[i].Type)
-        fmt.Println("User Name: " + users.Users[i].Name)
-        fmt.Println("Facebook Url: " + users.Users[i].Social.Facebook)
+            for _, a := range n.Attr {
+                fmt.Printf("  %v = %v \n", a.Key, a.Val)
+            }
+        }
+
+
+        if n.Type == html.TextNode {
+            text := strings.TrimSpace(n.Data)
+            fmt.Printf("text %v \n", text);
+        }
+
+        for c := n.FirstChild; c != nil; c = c.NextSibling {
+            f(c)
+        }
     }
-
+    f(doc)
 }
