@@ -3,6 +3,7 @@ module github.com/craigfay/golang_reactive_dom
 go 1.17
 
 require (
+	github.com/clbanning/mxj/v2 v2.3.2 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20211228203721-be292294a697 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
