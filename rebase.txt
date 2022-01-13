@@ -1,0 +1,39 @@
+pick da875a3 cleanup
+pick 770ce4a Helper fns
+pick f3e2575 event fn
+pick 068eda4 use helper fn
+pick 31510d0 helper fns
+pick 381a61e create package for helper fns
+pick 0567e07 Cleanup
+pick b5e2304 Hide KeepAlive()
+pick b0650c4 Minify js
+pick 40a2464 Remove unminified js
+pick 73ceecd parse xml struct
+pick de1bcb2 parse xml
+pick 2d3bb0a parse html
+pick a301cac render htmlj
+pick 32038ca hydrate
+
+# Rebase 3a5403c..32038ca onto 3a5403c (15 commands)
+#
+# Commands:
+# p, pick <commit> = use commit
+# r, reword <commit> = use commit, but edit the commit message
+# e, edit <commit> = use commit, but stop for amending
+# s, squash <commit> = use commit, but meld into previous commit
+# f, fixup <commit> = like "squash", but discard this commit's log message
+# x, exec <command> = run command (the rest of the line) using shell
+# b, break = stop here (continue rebase later with 'git rebase --continue')
+# d, drop <commit> = remove commit
+# l, label <label> = label current HEAD with a name
+# t, reset <label> = reset HEAD to a label
+# m, merge [-C <commit> | -c <commit>] <label> [# <oneline>]
+# .       create a merge commit using the original merge commit's
+# .       message (or the oneline, if no original merge commit was
+# .       specified). Use -c <commit> to reword the commit message.
+#
+# These lines can be re-ordered; they are executed from top to bottom.
+#
+# If you remove a line here THAT COMMIT WILL BE LOST.
+#
+# However, if you remove everything, the rebase will be aborted.

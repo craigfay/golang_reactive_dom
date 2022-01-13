@@ -50,7 +50,6 @@ func main() {
 
         }
 
-
         if n.Type == html.TextNode {
             text := strings.TrimSpace(n.Data)
             fmt.Printf("text %v \n", text);
